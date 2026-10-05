@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /cart.html
+Disallow: /wishlist.html
+
+Sitemap: https://thegembyte.com/sitemap.xml

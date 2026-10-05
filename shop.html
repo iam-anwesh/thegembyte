@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop all — TheGemByte</title>
+  <meta name="description" content="Browse every TheGemByte pick: tech, home, style, wellness and books. Filter by category, price and deals.">
+  <link rel="canonical" href="https://thegembyte.com/shop.html">
+  <meta property="og:site_name" content="TheGemByte">
+  <meta property="og:title" content="Shop all — TheGemByte">
+  <meta property="og:description" content="Browse every TheGemByte pick: tech, home, style, wellness and books. Filter by category, price and deals.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://thegembyte.com/assets/img/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f6b5c">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/products.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
+</head>
+<body data-page="shop">
+  <div id="site-header"></div>
+  <main id="main">
+    <div class="container">
+      <header class="page-head">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> / Shop</nav>
+        <h1 id="shop-title">Shop all gems</h1>
+        <p id="shop-blurb">Every product we've tested and loved, in one place.</p>
+      </header>
+      <div class="shop-layout">
+        <aside class="filters" aria-label="Filters">
+          <div class="filter-group">
+            <h3><label for="shop-q">Search</label></h3>
+            <input class="field" id="shop-q" type="search" placeholder="Search products…">
+          </div>
+          <div class="filter-group">
+            <h3>Category</h3>
+            <div class="chip-list" id="cat-chips"></div>
+          </div>
+          <div class="filter-group">
+            <h3><label for="shop-type">Sold by</label></h3>
+            <select class="select" id="shop-type">
+              <option value="all">Everyone</option>
+              <option value="affiliate">Partner retailers</option>
+              <option value="store">TheGemByte originals</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <h3><label for="shop-max">Max price</label></h3>
+            <select class="select" id="shop-max">
+              <option value="">Any price</option>
+              <option value="1000">Under ₹1,000</option>
+              <option value="2500">Under ₹2,500</option>
+              <option value="5000">Under ₹5,000</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="check"><input type="checkbox" id="shop-instock"> In stock only</label>
+          </div>
+        </aside>
+        <section aria-labelledby="shop-title">
+          <div class="toolbar">
+            <span class="muted" id="shop-count" aria-live="polite"></span>
+            <label class="sr-only" for="shop-sort">Sort by</label>
+            <select class="select" id="shop-sort">
+              <option value="featured">Featured</option>
+              <option value="discount">Biggest discount</option>
+              <option value="rating">Top rated</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </div>
+          <div class="product-grid" id="shop-grid"></div>
+          <p class="disclosure-inline">Some links on this page are affiliate links. <a href="disclosure.html">Read our disclosure</a>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

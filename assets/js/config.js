@@ -5,7 +5,7 @@
 window.SITE = {
   name: "TheGemByte",
   tagline: "Hidden gems, hand-picked.",
-  url: "https://thegembyte.com",
+  url: "https://iam-anwesh.github.io/thegembyte",
   email: "hello@thegembyte.com",
   currency: "INR",
   locale: "en-IN",

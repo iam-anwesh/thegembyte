@@ -2,6 +2,10 @@
 
 A static storefront for curated affiliate products, built so it can grow into a full online store. Plain HTML, CSS and JavaScript: no build step and no dependencies. Host it anywhere (GitHub Pages, Netlify, Cloudflare Pages, S3).
 
+## Live site
+
+Hosted on GitHub Pages at **https://iam-anwesh.github.io/thegembyte/** (Settings → Pages → deploy from `main`, `/ (root)`).
+
 ## Run locally
 
 ```bash
@@ -72,6 +76,6 @@ Set `SITE.forms.newsletter` and `SITE.forms.contact` in `config.js` to a form ba
 
 - [ ] Replace the sample products and placeholder affiliate URLs
 - [ ] Add real product images (`assets/img/`)
-- [ ] Set your domain in `config.js` (`url`), `sitemap.xml`, `robots.txt` and the canonical/OG tags
+- [ ] Moving to a custom domain? Replace `https://iam-anwesh.github.io/thegembyte` in `config.js` (`url`), `sitemap.xml`, `robots.txt` and the canonical/OG tags, and change `<base href>` in `404.html` to `/`
 - [ ] Configure form endpoints and analytics
 - [ ] Update social links and contact email

@@ -5,6 +5,7 @@
  * type: "store"     → the product is sold directly and goes into the cart
  *
  * image: path or URL. Leave empty to show an automatic illustrated placeholder.
+ *        Photos in assets/img/products/ are from Unsplash; credits are on about.html.
  * Replace the example affiliate URLs with your own tracked links.
  */
 window.CATEGORIES = [
@@ -29,7 +30,7 @@ window.PRODUCTS = [
     reviews: 2381,
     badges: ["Editor's pick"],
     featured: true,
-    image: "",
+    image: "assets/img/products/wireless-earbuds-pro.jpg",
     summary: "Active noise cancelling, 32-hour battery and a case that fits a coin pocket.",
     highlights: ["Hybrid ANC up to 40 dB", "32 h total playback", "IPX5 sweat resistant", "Multipoint pairing"]
   },
@@ -46,7 +47,7 @@ window.PRODUCTS = [
     reviews: 914,
     badges: ["Best value"],
     featured: true,
-    image: "",
+    image: "assets/img/products/mechanical-keyboard-75.jpg",
     summary: "Gasket-mounted, hot-swappable and quiet enough for shared offices.",
     highlights: ["Hot-swap switches", "Bluetooth + 2.4 GHz + USB-C", "4000 mAh battery", "Mac & Windows layouts"]
   },
@@ -63,7 +64,7 @@ window.PRODUCTS = [
     reviews: 5120,
     badges: [],
     featured: false,
-    image: "",
+    image: "assets/img/products/smart-led-bulb-4pack.jpg",
     summary: "16 million colours, schedules and voice control without a hub.",
     highlights: ["Works with Alexa & Google", "No hub required", "9 W, 806 lumens", "Energy-use reports"]
   },
@@ -80,7 +81,7 @@ window.PRODUCTS = [
     reviews: 86,
     badges: ["TheGemByte original"],
     featured: true,
-    image: "",
+    image: "assets/img/products/linen-throw-blanket.jpg",
     summary: "Breathable European flax linen that softens with every wash.",
     highlights: ["100% European flax", "130 × 170 cm", "Pre-washed for softness", "Ships in 2–4 days"]
   },
@@ -97,7 +98,7 @@ window.PRODUCTS = [
     reviews: 142,
     badges: ["TheGemByte original", "Gift ready"],
     featured: true,
-    image: "",
+    image: "assets/img/products/sterling-silver-solitaire.jpg",
     summary: "A single brilliant-cut stone on a fine 18-inch 925 silver chain.",
     highlights: ["925 sterling silver", "6 mm brilliant-cut CZ", "Hypoallergenic", "Arrives gift-boxed"]
   },
@@ -114,7 +115,7 @@ window.PRODUCTS = [
     reviews: 633,
     badges: [],
     featured: false,
-    image: "",
+    image: "assets/img/products/minimal-leather-watch.jpg",
     summary: "Clean 38 mm dial, sapphire-coated glass and a vegetable-tanned strap.",
     highlights: ["38 mm case", "Japanese quartz movement", "5 ATM water resistance", "Quick-release strap"]
   },
@@ -131,7 +132,7 @@ window.PRODUCTS = [
     reviews: 1207,
     badges: ["Trending"],
     featured: true,
-    image: "",
+    image: "assets/img/products/sunrise-alarm-lamp.jpg",
     summary: "Simulates sunrise over 30 minutes so you wake up gently.",
     highlights: ["Sunrise & sunset modes", "7 natural sounds", "FM radio", "USB charging port"]
   },
@@ -148,7 +149,7 @@ window.PRODUCTS = [
     reviews: 3402,
     badges: [],
     featured: false,
-    image: "",
+    image: "assets/img/products/acupressure-mat-set.jpg",
     summary: "Ten minutes a day to ease back tension after long desk hours.",
     highlights: ["Organic cotton cover", "Plant-based foam", "6,210 pressure points", "Carry bag included"]
   },
@@ -165,7 +166,7 @@ window.PRODUCTS = [
     reviews: 98000,
     badges: ["Bestseller"],
     featured: false,
-    image: "",
+    image: "assets/img/products/atomic-habits.jpg",
     summary: "The practical guide to building good habits and breaking bad ones.",
     highlights: ["Paperback, 320 pages", "Practical frameworks", "Great gift", "Bestseller worldwide"]
   },
@@ -182,7 +183,7 @@ window.PRODUCTS = [
     reviews: 58,
     badges: ["TheGemByte original"],
     featured: false,
-    image: "",
+    image: "assets/img/products/gem-journal.jpg",
     summary: "A5 lay-flat notebook on 120 gsm paper that doesn't ghost.",
     highlights: ["A5, 192 pages", "120 gsm ivory paper", "Lay-flat binding", "Two ribbon markers"]
   }

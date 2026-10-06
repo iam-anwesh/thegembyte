@@ -4,5 +4,6 @@
 User-agent: *
 Disallow: /thegembyte/cart.html
 Disallow: /thegembyte/wishlist.html
+Disallow: /thegembyte/admin/
 
 Sitemap: https://iam-anwesh.github.io/thegembyte/sitemap.xml

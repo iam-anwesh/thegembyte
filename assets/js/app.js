@@ -5,8 +5,10 @@
   "use strict";
 
   const SITE = window.SITE;
-  const PRODUCTS = window.PRODUCTS || [];
-  const CATEGORIES = window.CATEGORIES || [];
+  // Filled from assets/data/*.json before the page renders (see Boot below).
+  // These files are what the admin portal at /admin edits.
+  let PRODUCTS = [];
+  let CATEGORIES = [];
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
@@ -55,6 +57,10 @@
     tech: ["#0f6b5c", "#2fa58c"], home: ["#b5832f", "#e2b766"], style: ["#8f3c5a", "#d7799b"],
     wellness: ["#3d7a3a", "#8cc47f"], books: ["#3c3f8f", "#7a7fd6"]
   };
+  // The admin portal saves uploads as "/assets/img/…". The site lives under /thegembyte/ on GitHub Pages,
+  // so treat a single leading slash as "from the site root" rather than the domain root. Full URLs pass through.
+  const imageSrc = (p) => (p.image || "").replace(/^\/(?!\/)/, "");
+
   // The placeholder always renders; a product photo sits on top of it and
   // removes itself if it fails to load, so a broken URL never shows a broken image.
   function media(p, alt = true) {
@@ -62,7 +68,7 @@
     const cat = CATEGORIES.find((c) => c.id === p.category);
     const placeholder = `<div class="placeholder" ${p.image ? 'aria-hidden="true"' : `role="img" aria-label="${esc(p.name)}"`} style="background:linear-gradient(135deg,${a},${b})">${esc(cat ? cat.icon : "◆")}</div>`;
     if (!p.image) return placeholder;
-    return `${placeholder}<img class="media-img" src="${esc(p.image)}" alt="${alt ? esc(p.name) : ""}" loading="lazy" decoding="async" onerror="this.remove()">`;
+    return `${placeholder}<img class="media-img" src="${esc(imageSrc(p))}" alt="${alt ? esc(p.name) : ""}" loading="lazy" decoding="async" onerror="this.remove()">`;
   }
 
   function stars(r) {
@@ -488,7 +494,7 @@
         url: p.type === "affiliate" ? p.affiliateUrl : `${SITE.url}/product.html?id=${p.id}`
       }
     };
-    if (p.image) ld.image = new URL(p.image, SITE.url + "/").toString();
+    if (p.image) ld.image = new URL(imageSrc(p), SITE.url + "/").toString();
     const s = document.createElement("script");
     s.type = "application/ld+json";
     s.textContent = JSON.stringify(ld);
@@ -585,7 +591,25 @@
   const savedTheme = store.get("theme", null);
   if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
-  document.addEventListener("DOMContentLoaded", () => {
+  // no-cache still uses the browser cache but revalidates it, so admin edits show up on the next visit.
+  const loadJSON = (name) => fetch(`assets/data/${name}.json`, { cache: "no-cache" }).then((r) => {
+    if (!r.ok) throw new Error(`${name}.json: HTTP ${r.status}`);
+    return r.json();
+  });
+
+  async function loadCatalogue() {
+    try {
+      const [products, categories, settings] = await Promise.all(["products", "categories", "settings"].map(loadJSON));
+      PRODUCTS = products.products || [];
+      CATEGORIES = categories.categories || [];
+      if (settings.amazonTag) SITE.affiliateParams = { ...SITE.affiliateParams, tag: settings.amazonTag };
+    } catch (err) {
+      console.error("Could not load the product catalogue", err);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await loadCatalogue();
     renderLayout();
     bindGlobalActions();
     const page = document.body.dataset.page;

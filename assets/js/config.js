@@ -12,6 +12,7 @@ window.SITE = {
 
   // Appended to every affiliate link that doesn't already carry a tag.
   // Example for Amazon Associates Australia: { tag: "yourtag-22" }
+  // The Amazon tracking ID set in the admin portal (Site settings) overrides `tag`.
   affiliateParams: {},
 
   // Affiliate products always link out to the merchant. Own-store products

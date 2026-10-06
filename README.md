@@ -13,6 +13,8 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
+Open the site through a local server (or VS Code's Live Server), not by double-clicking the HTML files: the catalogue is loaded from JSON files, which browsers block on `file://` pages.
+
 ## Structure
 
 | Path | Purpose |
@@ -23,25 +25,47 @@ python3 -m http.server 8000
 | `cart.html` | Bag for products you sell directly, with a free-shipping progress bar |
 | `wishlist.html` | Saved products (kept in the browser) |
 | `about`, `contact`, `disclosure`, `privacy`, `terms`, `shipping`, `404` | Content and legal pages |
-| `assets/js/config.js` | **Site settings:** name, currency, affiliate tags, form endpoints, checkout |
-| `assets/js/products.js` | **Catalogue:** categories and products |
+| `admin/` | **Admin portal** (Sveltia CMS) for editing products, categories and the Amazon tracking ID |
+| `assets/data/products.json` | **Catalogue:** products (edited through the admin portal) |
+| `assets/data/categories.json` | Categories (edited through the admin portal) |
+| `assets/data/settings.json` | Amazon Associates tracking ID (edited through the admin portal) |
+| `assets/js/config.js` | **Site settings:** name, currency, form endpoints, checkout |
 | `assets/js/app.js` | All storefront logic |
 | `assets/css/styles.css` | Styles with light and dark themes |
 
 The header and footer are rendered by `app.js`, so you edit navigation in one place.
 
+## Admin portal
+
+Products, categories and the Amazon tracking ID are managed at **https://iam-anwesh.github.io/thegembyte/admin/**. Each save is a commit to `main`, and GitHub Pages republishes the site about a minute later. The portal is [Sveltia CMS](https://github.com/sveltia/sveltia-cms), loaded from unpkg; its settings are in `admin/config.yml`.
+
+**Sign in** with a GitHub personal access token (one-time setup):
+
+1. On GitHub, open **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
+2. Name it (for example "TheGemByte admin"), pick an expiry, and under **Repository access** choose **Only select repositories → iam-anwesh/thegembyte**.
+3. Under **Permissions → Repository permissions**, set **Contents** to **Read and write**.
+4. Generate the token, copy it, and paste it into **Sign In Using Access Token** on the admin page. The browser remembers it; treat it like a password.
+
+To give someone else access, add them as a collaborator on the repository and have them create their own token.
+
+What you can edit:
+
+- **Products:** add, edit, reorder or remove products, upload photos (saved to `assets/img/products/`), and set prices, was-prices, ratings and highlights. Amazon URLs must start with `https://www.amazon.com.au/`.
+- **Categories:** names, icons and blurbs. Don't change a category's ID once products use it.
+- **Site settings:** your Amazon Associates tracking ID (ends in `-22`). It's added as `?tag=…` to every Amazon link.
+
 ## Adding products
 
-Add an entry to `window.PRODUCTS` in `assets/js/products.js`.
+The easiest way is the admin portal above. To edit by hand instead, add an entry to the `products` list in `assets/data/products.json`.
 
 **Affiliate product** (the button links out to the merchant):
 
-```js
-{ id: "my-product", name: "…", brand: "…", category: "tech", type: "affiliate",
-  merchant: "Amazon", affiliateUrl: "https://www.amazon.com.au/dp/ASIN",
-  price: 29.99, compareAt: 39.99, rating: 4.5, reviews: 120,
-  badges: ["Editor's pick"], featured: true, image: "assets/img/my-product.jpg",
-  summary: "…", highlights: ["…", "…"] }
+```json
+{ "type": "affiliate", "id": "my-product", "name": "…", "brand": "…", "category": "tech",
+  "merchant": "Amazon", "affiliateUrl": "https://www.amazon.com.au/dp/ASIN",
+  "price": 29.99, "compareAt": 39.99, "rating": 4.5, "reviews": 120,
+  "badges": ["Editor's pick"], "featured": true, "image": "assets/img/products/my-product.jpg",
+  "summary": "…", "highlights": ["…", "…"] }
 ```
 
 **Your own product** (goes into the bag): use `type: "store"` and add `sku` and `stock`. Leave out `merchant` and `affiliateUrl`.
@@ -50,7 +74,7 @@ Prices can have cents (`29.99`); whole amounts show without them. Only set `comp
 
 ## Affiliate setup
 
-- Put your tracked links in `affiliateUrl`. Or set a global tag in `config.js`, for example `affiliateParams: { tag: "yourtag-22" }` (Amazon Australia tags end in `-22`), and it is added to every affiliate link that doesn't already have one.
+- Set your Amazon Associates tracking ID under **Site settings** in the admin portal (Amazon Australia IDs end in `-22`). It is added as `?tag=…` to every affiliate link that doesn't already have one. You can also set `affiliateParams` in `config.js` for other parameters.
 - Outbound links use `rel="sponsored nofollow noopener"`, as Google requires for paid links.
 - The disclosure appears in the footer, on the shop page and on every affiliate product page, as the Amazon Associates program requires.
 - Every affiliate click, product view, add-to-cart and form submit is pushed to `window.dataLayer`. Add a Google Tag Manager or GA4 snippet to start recording them.

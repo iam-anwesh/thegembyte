@@ -1,0 +1,103 @@
+# Admin portal for TheGemByte (Sveltia CMS). Open /admin on the live site and
+# sign in with a GitHub personal access token. Every save is a commit to main,
+# and GitHub Pages republishes the site about a minute later.
+
+backend:
+  name: github
+  repo: iam-anwesh/thegembyte
+  branch: main
+  auth_methods: [token]
+  commit_messages:
+    update: "Admin: update {{collection}} “{{slug}}”"
+    uploadMedia: "Admin: upload “{{path}}”"
+    deleteMedia: "Admin: delete “{{path}}”"
+
+site_url: https://iam-anwesh.github.io/thegembyte/
+display_url: https://iam-anwesh.github.io/thegembyte/
+logo:
+  src: ../assets/img/favicon.svg
+
+# Product photos. Stored paths look like assets/img/products/name.jpg.
+media_folder: assets/img/products
+public_folder: assets/img/products
+
+collections:
+  - name: store
+    label: Store
+    description: Products, categories and site-wide settings.
+    editor:
+      preview: false
+    files:
+      - name: products
+        label: Products
+        file: assets/data/products.json
+        fields:
+          - name: products
+            label: Products
+            label_singular: Product
+            widget: list
+            collapsed: true
+            summary: "{{fields.name}} · ${{fields.price}}"
+            typeKey: type
+            types:
+              - name: affiliate
+                label: Amazon product (affiliate link)
+                widget: object
+                summary: "{{fields.name}} · ${{fields.price}} · Amazon"
+                fields:
+                  - { name: id, label: ID, widget: string, pattern: ["^[a-z0-9-]+$", "Lowercase letters, numbers and dashes only"], hint: "Used in the page address (product.html?id=…). Don't change it once the product is live." }
+                  - { name: name, label: Name, widget: string }
+                  - { name: brand, label: Brand, widget: string, hint: "The manufacturer, e.g. Timex. Shown to search engines." }
+                  - { name: category, label: Category, widget: relation, collection: store, file: categories, value_field: "categories.*.id", search_fields: ["categories.*.name"], display_fields: ["categories.*.name"] }
+                  - { name: merchant, label: Retailer, widget: string, default: Amazon, hint: "Shown on the button, e.g. “View on Amazon”." }
+                  - { name: affiliateUrl, label: Amazon product URL, widget: string, pattern: ["^https://www\\.amazon\\.com\\.au/", "Must be an amazon.com.au link"], hint: "e.g. https://www.amazon.com.au/dp/B0BZV4QFP8 — your tracking ID from Site settings is added automatically." }
+                  - { name: price, label: Price (A$), widget: number, value_type: float, min: 0, hint: "Current price on the Amazon listing." }
+                  - { name: compareAt, label: Was price / RRP (A$), widget: number, value_type: float, min: 0, required: false, hint: "Only if Amazon shows a was-price or RRP. Leave empty for no discount badge." }
+                  - { name: rating, label: Star rating, widget: number, value_type: float, min: 0, max: 5, step: 0.1, hint: "From the Amazon listing, e.g. 4.3" }
+                  - { name: reviews, label: Number of ratings, widget: number, value_type: int, min: 0 }
+                  - { name: badges, label: Badges, widget: list, required: false, hint: "Optional labels such as Editor's pick or Bestseller." }
+                  - { name: featured, label: Feature on the home page, widget: boolean, default: false }
+                  - { name: image, label: Photo, widget: image, required: false, hint: "About 800 px wide, JPG. Leave empty for a coloured placeholder." }
+                  - { name: summary, label: Summary, widget: text, hint: "One or two sentences shown on the product page." }
+                  - { name: highlights, label: Highlights, widget: list, hint: "Short bullet points, about four." }
+              - name: store
+                label: TheGemByte original (sold in your store)
+                widget: object
+                summary: "{{fields.name}} · ${{fields.price}} · Original"
+                fields:
+                  - { name: id, label: ID, widget: string, pattern: ["^[a-z0-9-]+$", "Lowercase letters, numbers and dashes only"], hint: "Used in the page address (product.html?id=…). Don't change it once the product is live." }
+                  - { name: name, label: Name, widget: string }
+                  - { name: category, label: Category, widget: relation, collection: store, file: categories, value_field: "categories.*.id", search_fields: ["categories.*.name"], display_fields: ["categories.*.name"] }
+                  - { name: sku, label: SKU, widget: string }
+                  - { name: stock, label: Stock, widget: number, value_type: int, min: 0, hint: "0 shows the product as sold out." }
+                  - { name: price, label: Price (A$), widget: number, value_type: float, min: 0 }
+                  - { name: compareAt, label: Was price (A$), widget: number, value_type: float, min: 0, required: false, hint: "Leave empty for no discount badge." }
+                  - { name: rating, label: Star rating, widget: number, value_type: float, min: 0, max: 5, step: 0.1 }
+                  - { name: reviews, label: Number of ratings, widget: number, value_type: int, min: 0 }
+                  - { name: badges, label: Badges, widget: list, required: false }
+                  - { name: featured, label: Feature on the home page, widget: boolean, default: false }
+                  - { name: image, label: Photo, widget: image, required: false }
+                  - { name: summary, label: Summary, widget: text }
+                  - { name: highlights, label: Highlights, widget: list }
+
+      - name: categories
+        label: Categories
+        file: assets/data/categories.json
+        fields:
+          - name: categories
+            label: Categories
+            label_singular: Category
+            widget: list
+            collapsed: true
+            summary: "{{fields.name}}"
+            fields:
+              - { name: id, label: ID, widget: string, pattern: ["^[a-z0-9-]+$", "Lowercase letters, numbers and dashes only"], hint: "Used in shop links. Products refer to this, so don't change it once used." }
+              - { name: name, label: Name, widget: string }
+              - { name: icon, label: Icon, widget: string, hint: "One symbol, e.g. ⌁ ⌂ ◇ ✿ ❏" }
+              - { name: blurb, label: Blurb, widget: string }
+
+      - name: settings
+        label: Site settings
+        file: assets/data/settings.json
+        fields:
+          - { name: amazonTag, label: Amazon Associates tracking ID, widget: string, required: false, pattern: ["^[A-Za-z0-9-]+-22$", "Amazon Australia tracking IDs end in -22, e.g. thegembyte-22"], hint: "Added as ?tag=… to every Amazon link so the commission comes to you. Copy it exactly from Associates Central." }

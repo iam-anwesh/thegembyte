@@ -7,11 +7,11 @@ window.SITE = {
   tagline: "Hidden gems, hand-picked.",
   url: "https://iam-anwesh.github.io/thegembyte",
   email: "hello@thegembyte.com",
-  currency: "INR",
-  locale: "en-IN",
+  currency: "AUD",
+  locale: "en-AU",
 
   // Appended to every affiliate link that doesn't already carry a tag.
-  // Example for Amazon Associates: { tag: "yourtag-21" }
+  // Example for Amazon Associates Australia: { tag: "yourtag-22" }
   affiliateParams: {},
 
   // Affiliate products always link out to the merchant. Own-store products
@@ -19,10 +19,10 @@ window.SITE = {
   // page collects a pre-order email instead of payment.
   checkout: {
     enabled: false,
-    // Wire a provider here later: "stripe-payment-links", "razorpay", "snipcart"…
+    // Wire a provider here later: "stripe-payment-links", "snipcart"…
     provider: null,
-    freeShippingThreshold: 999,
-    shippingFlat: 79
+    freeShippingThreshold: 75,
+    shippingFlat: 10
   },
 
   // Form endpoints (e.g. Formspree, Getform, Mailchimp/ConvertKit form URLs).

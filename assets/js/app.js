@@ -53,11 +53,14 @@
     tech: ["#0f6b5c", "#2fa58c"], home: ["#b5832f", "#e2b766"], style: ["#8f3c5a", "#d7799b"],
     wellness: ["#3d7a3a", "#8cc47f"], books: ["#3c3f8f", "#7a7fd6"]
   };
+  // The placeholder always renders; a product photo sits on top of it and
+  // removes itself if it fails to load, so a broken URL never shows a broken image.
   function media(p, alt = true) {
-    if (p.image) return `<img src="${esc(p.image)}" alt="${alt ? esc(p.name) : ""}" loading="lazy" decoding="async">`;
     const [a, b] = PALETTES[p.category] || ["#555", "#999"];
     const cat = CATEGORIES.find((c) => c.id === p.category);
-    return `<div class="placeholder" role="img" aria-label="${esc(p.name)}" style="background:linear-gradient(135deg,${a},${b})">${esc(cat ? cat.icon : "◆")}</div>`;
+    const placeholder = `<div class="placeholder" ${p.image ? 'aria-hidden="true"' : `role="img" aria-label="${esc(p.name)}"`} style="background:linear-gradient(135deg,${a},${b})">${esc(cat ? cat.icon : "◆")}</div>`;
+    if (!p.image) return placeholder;
+    return `${placeholder}<img class="media-img" src="${esc(p.image)}" alt="${alt ? esc(p.name) : ""}" loading="lazy" decoding="async" onerror="this.remove()">`;
   }
 
   function stars(r) {

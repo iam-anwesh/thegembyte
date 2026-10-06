@@ -39,7 +39,7 @@ Add an entry to `window.PRODUCTS` in `assets/js/products.js`.
 ```js
 { id: "my-product", name: "…", category: "tech", type: "affiliate",
   merchant: "Amazon", affiliateUrl: "https://amzn.to/xxxx",
-  price: 1999, compareAt: 2499, rating: 4.5, reviews: 120,
+  price: 29, compareAt: 39, rating: 4.5, reviews: 120,
   badges: ["Editor's pick"], featured: true, image: "assets/img/my-product.jpg",
   summary: "…", highlights: ["…", "…"] }
 ```
@@ -50,9 +50,9 @@ If `image` is empty, a coloured placeholder is shown. After adding products, upd
 
 ## Affiliate setup
 
-- Put your tracked links in `affiliateUrl`. Or set a global tag in `config.js`, for example `affiliateParams: { tag: "yourtag-21" }`, and it is added to every affiliate link that doesn't already have one.
+- Put your tracked links in `affiliateUrl`. Or set a global tag in `config.js`, for example `affiliateParams: { tag: "yourtag-22" }` (Amazon Australia tags end in `-22`), and it is added to every affiliate link that doesn't already have one.
 - Outbound links use `rel="sponsored nofollow noopener"`, as Google requires for paid links.
-- The disclosure appears in the footer, on the shop page and on every affiliate product page, as FTC, ASCI and Amazon Associates rules require.
+- The disclosure appears in the footer, on the shop page and on every affiliate product page, as the Amazon Associates program requires.
 - Every affiliate click, product view, add-to-cart and form submit is pushed to `window.dataLayer`. Add a Google Tag Manager or GA4 snippet to start recording them.
 
 ## Forms (newsletter, contact, pre-orders)

@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "id": "tech",
+      "name": "Tech & Gadgets",
+      "icon": "⌁",
+      "blurb": "Smart picks that earn their place on your desk."
+    },
+    {
+      "id": "home",
+      "name": "Home & Living",
+      "icon": "⌂",
+      "blurb": "Small upgrades that make a home feel finished."
+    },
+    {
+      "id": "style",
+      "name": "Style & Jewellery",
+      "icon": "◇",
+      "blurb": "Timeless accessories and everyday gems."
+    },
+    {
+      "id": "wellness",
+      "name": "Wellness",
+      "icon": "✿",
+      "blurb": "Thoughtful tools for rest and routine."
+    },
+    {
+      "id": "books",
+      "name": "Books & Learning",
+      "icon": "❏",
+      "blurb": "Reads and kits that leave you sharper."
+    }
+  ]
+}

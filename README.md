@@ -37,16 +37,16 @@ Add an entry to `window.PRODUCTS` in `assets/js/products.js`.
 **Affiliate product** (the button links out to the merchant):
 
 ```js
-{ id: "my-product", name: "…", category: "tech", type: "affiliate",
-  merchant: "Amazon", affiliateUrl: "https://amzn.to/xxxx",
-  price: 29, compareAt: 39, rating: 4.5, reviews: 120,
+{ id: "my-product", name: "…", brand: "…", category: "tech", type: "affiliate",
+  merchant: "Amazon", affiliateUrl: "https://www.amazon.com.au/dp/ASIN",
+  price: 29.99, compareAt: 39.99, rating: 4.5, reviews: 120,
   badges: ["Editor's pick"], featured: true, image: "assets/img/my-product.jpg",
   summary: "…", highlights: ["…", "…"] }
 ```
 
 **Your own product** (goes into the bag): use `type: "store"` and add `sku` and `stock`. Leave out `merchant` and `affiliateUrl`.
 
-If `image` is empty, a coloured placeholder is shown. After adding products, update `sitemap.xml`.
+Prices can have cents (`29.99`); whole amounts show without them. Only set `compareAt` when the retailer shows a real was-price or RRP, and copy `rating` and `reviews` from the listing, because they appear in search results. If `image` is empty, a coloured placeholder is shown. After adding products, update `sitemap.xml`.
 
 ## Affiliate setup
 

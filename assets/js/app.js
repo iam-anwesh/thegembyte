@@ -12,8 +12,10 @@
 
   /* ---------- Helpers ---------- */
 
+  // Whole amounts show without cents ($37); anything else shows two decimals ($59.99).
   const money = new Intl.NumberFormat(SITE.locale, { style: "currency", currency: SITE.currency, maximumFractionDigits: 0 });
-  const fmt = (n) => money.format(n);
+  const moneyCents = new Intl.NumberFormat(SITE.locale, { style: "currency", currency: SITE.currency, minimumFractionDigits: 2 });
+  const fmt = (n) => (Number.isInteger(n) ? money : moneyCents).format(n);
 
   function esc(str) {
     return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -478,7 +480,7 @@
     const ld = {
       "@context": "https://schema.org", "@type": "Product", name: p.name, description: p.summary,
       sku: p.sku || p.id, category: categoryName(p.category),
-      brand: { "@type": "Brand", name: p.type === "store" ? SITE.name : p.merchant },
+      brand: { "@type": "Brand", name: p.brand || (p.type === "store" ? SITE.name : p.merchant) },
       aggregateRating: { "@type": "AggregateRating", ratingValue: p.rating, reviewCount: p.reviews },
       offers: {
         "@type": "Offer", price: p.price, priceCurrency: SITE.currency,
